@@ -66,10 +66,12 @@ return false;
 int main(int argc, char *argv[]){
    
    vector< vector<char> > board = readfile(); 
+   int x_lim = board.size();
+   int y_lim = board[0].size();
    bool istrue = false;
 
-   for (int x = 0; x <4; ++x)
-       for (int y = 0; y < 5; ++y)
+   for (int x = 0; x <x_lim; ++x)
+       for (int y = 0; y < y_lim; ++y)
            istrue += isThere(x,y,argument,board,3);
 
     cout << istrue << endl;
