@@ -1,0 +1,73 @@
+<!doctype html>
+
+<html>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js> </script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js></script>
+<script src=model_go.js> </script>
+<script src=view_go.js></script>
+<script src=validate_go.js></script>
+<body>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width=500 height=500 viewBox="0 0 96 96">
+    <rect width="100" height="100" fill="#DCB35C"/>
+    <rect width="90" height="90" x="3" y="3" stroke="#000" stroke-width=".2" fill="none"/>
+    <path stroke="#000" stroke-width=".2" fill="none" d="m3,8h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90m0,5h-90m0,5h90"/>
+    <path stroke="#000" stroke-width=".2" fill="none" d="m8,3v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90m5,0v-90m5,0v90"/>
+    <path stroke="#000" stroke-width=".8" stroke-linecap="round" d="m18,78l0,0m30,0l0,0m30,0l0,0m0-30l0,0m-30,0l0,0m-30,0l0,0m0-30l0,0m30,0l0,0m30,0l0,0"/>
+</svg>
+
+<div class=coordinate>
+    <span id=point_x> </span>
+    <span id=point_y> </span>
+</div>
+
+<button onclick='view.remove_circ(0)'> remove! </button>
+<button onclick='view.remove_circ(1)'> remove all </button>
+<!--<button onclick='view.recover()'>recover</button> -->
+
+
+<script>
+
+//변수 선언
+var circ_data = [] 
+var circ_back = []
+var verify_data = {} 
+var verify_data_back = {}
+var list_go = []
+var list_back = []
+var review = 0
+var dol_color = 'black'
+
+// screen -> svg 좌표로 mapping
+function cursorPoint(e){
+
+    var svg = document.querySelector('svg') 
+    var pt = svg.createSVGPoint()
+    pt.x = e.clientX; pt.y = e.clientY
+
+    return pt.matrixTransform(svg.getScreenCTM().inverse())
+}
+
+
+// 바둑돌 놓기
+$('svg').on('click', function(e) {
+    var loc = cursorPoint(e) 
+    loc.x = Math.round((loc.x+2)/5)*5-2
+    loc.y = Math.round((loc.y+2)/5)*5-2
+    if (validate.isThere(list_go,loc) == 1)
+        {alert("already there")}
+    else
+        {view.add_circ(loc.x,loc.y)}
+    $('span#point_x').text(loc.x);
+    $('span#point_y').text(loc.y);
+    })
+
+
+</script>
+
+
+</body>
+
+</html>
